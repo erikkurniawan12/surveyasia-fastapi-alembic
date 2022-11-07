@@ -21,16 +21,16 @@ depends_on = None
 
 
 def upgrade():
-    op.bulk_insert(
-        tbl_users,
-        [{'nama_lengkap':faker.name(), 
-                 'address':faker.address(),
-                 'birth_date':faker.date_of_birth(tzinfo=None, minimum_age=21, maximum_age=28),
-                 'telp':faker.phone_number(),
-                 'email':faker.email()
-                  } for x in range(10)]
+    pgw = op.create_table(
+        'dt_pegawai',
+        sa.Column('id_pegawai', sa.Integer, primary_key=True),
+        sa.Column('nama_pegawai', sa.String(255), nullable=False),
+        sa.Column('alamat_pegawai', sa.String(255)),
+        sa.Column('ttl_pegawai', sa.Date()),
+        sa.Column('telp_pegawai', sa.String(255)),
+        sa.Column('email_pegawai', sa.String(255), unique=True)
     )
 
 
 def downgrade():
-    op.drop_table('tbl_users')
+    op.drop_table('dt_pegawai')
