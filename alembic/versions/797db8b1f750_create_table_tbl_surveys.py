@@ -29,7 +29,7 @@ def upgrade():
         sa.Column('expired_at', sa.TIMESTAMP, nullable=True),
         sa.Column('deleted_at', sa.TIMESTAMP, nullable=True),
         sa.Column('created_at', sa.TIMESTAMP, nullable=True),
-        sa.Column('updated_at', sa.TIMESTAMP, nullable=True),
+        sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
     )
     op.create_foreign_key(
         constraint_name='fk_surveys_surveycategories', 

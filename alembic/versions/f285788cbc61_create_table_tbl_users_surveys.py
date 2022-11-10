@@ -23,7 +23,7 @@ def upgrade():
         sa.Column('user_id', sa.BigInteger, nullable=False),
         sa.Column('survey_id', sa.BigInteger, nullable=False),
         sa.Column('created_at', sa.TIMESTAMP, nullable=True),
-        sa.Column('updated_at', sa.TIMESTAMP, nullable=True),
+        sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
     )
     op.create_foreign_key(
         constraint_name='fk_userssurveys_users', 

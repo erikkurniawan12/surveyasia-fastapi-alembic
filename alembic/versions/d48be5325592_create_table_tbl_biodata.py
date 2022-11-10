@@ -40,7 +40,7 @@ def upgrade():
         sa.Column('job', sa.String(255), nullable=False),
         sa.Column('job_location', sa.String(255), nullable=False),
         sa.Column('created_at', sa.TIMESTAMP, nullable=True),
-        sa.Column('updated_at', sa.TIMESTAMP, nullable=True),
+        sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
     )
     op.create_foreign_key(
         constraint_name='fk_biodata_users', 

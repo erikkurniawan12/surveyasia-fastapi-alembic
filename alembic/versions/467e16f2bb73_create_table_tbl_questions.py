@@ -24,7 +24,7 @@ def upgrade():
         sa.Column('question', sa.String(255), nullable=False),
         sa.Column('deleted_at', sa.TIMESTAMP, nullable=True),
         sa.Column('created_at', sa.TIMESTAMP, nullable=True),
-        sa.Column('updated_at', sa.TIMESTAMP, nullable=True),
+        sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
     )
     op.create_foreign_key(
         constraint_name='fk_questions_surveys', 

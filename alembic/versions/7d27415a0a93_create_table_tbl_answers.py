@@ -24,7 +24,7 @@ def upgrade():
         sa.Column('question_id', sa.BigInteger, nullable=False),
         sa.Column('answer', sa.Text, nullable=True),
         sa.Column('created_at', sa.TIMESTAMP, nullable=True),
-        sa.Column('updated_at', sa.TIMESTAMP, nullable=True),
+        sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
     )
     op.create_foreign_key(
         constraint_name='fk_answers_users', 

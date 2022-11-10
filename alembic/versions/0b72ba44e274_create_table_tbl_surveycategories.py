@@ -23,7 +23,7 @@ def upgrade():
         sa.Column('category', sa.Enum('Customers', 'Education', 'Helathcare', 'Employee', 'Market Research'), nullable=False), 
         sa.Column('description', sa.Text, nullable=False), 
         sa.Column('created_at', sa.TIMESTAMP, nullable=True), 
-        sa.Column('updated_at', sa.TIMESTAMP, nullable=True),
+        sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
     )
 
 
