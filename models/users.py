@@ -103,3 +103,15 @@ tbl_surveys = Table(
     sa.Column('created_at', sa.TIMESTAMP, nullable=True),
     sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
 )
+
+
+tbl_questions = Table(
+    'tbl_questions', 
+    metadata, 
+    sa.Column('id', sa.BigInteger, primary_key=True, autoincrement=True, nullable=False),
+        sa.Column('survey_id', sa.BigInteger, nullable=False),
+        sa.Column('question', sa.String(255), nullable=False),
+        sa.Column('deleted_at', sa.TIMESTAMP, nullable=True),
+        sa.Column('created_at', sa.TIMESTAMP, nullable=True),
+        sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
+)
