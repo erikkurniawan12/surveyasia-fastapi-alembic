@@ -6,7 +6,8 @@ from sqlalchemy import (
     Table,
     BigInteger, 
     Enum, 
-    TIMESTAMP
+    TIMESTAMP, 
+    ForeignKey
 )
 from sqlalchemy.sql.sqltypes import Date
 import sqlalchemy as sa
@@ -43,7 +44,7 @@ tbl_users = Table(
     sa.Column('address', sa.String(255), nullable=False),
     sa.Column('provider_name', sa.String(255), nullable=True),
     sa.Column('email_verified_at', sa.TIMESTAMP, nullable=True),
-    sa.Column('biodata_id', sa.BigInteger, nullable=False),
+    sa.Column('biodata_id', sa.BigInteger, sa.ForeignKey('tbl_biodata.id'), nullable=False),
     sa.Column('created_at', sa.TIMESTAMP, nullable=True),
     sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
 )
@@ -53,7 +54,7 @@ tbl_biodata = Table(
     'tbl_biodata', 
     metadata, 
     sa.Column('id', sa.BigInteger, primary_key=True, autoincrement=True, nullable=False),
-    sa.Column('user_id', sa.BigInteger, nullable=False), 
+    sa.Column('user_id', sa.BigInteger, sa.ForeignKey('tbl_users.id'), nullable=False), 
     sa.Column('nik', sa.BigInteger, nullable=False),
     sa.Column('nama_lengkap', sa.String(255), nullable=False),
     sa.Column('telp', sa.String(255), nullable=False),
@@ -92,7 +93,7 @@ tbl_surveys = Table(
     'tbl_surveys', 
     metadata, 
     sa.Column('id', sa.BigInteger, primary_key=True, autoincrement=True, nullable=False),
-    sa.Column('surveycategory_id', sa.BigInteger, nullable=False),
+    sa.Column('surveycategory_id', sa.BigInteger, sa.ForeignKey('tbl_surveyCategories.id'), nullable=False),
     sa.Column('title', sa.String(255), nullable=False),
     sa.Column('author', sa.String(255), nullable=False),
     sa.Column('description', sa.String(255), nullable=True),
@@ -109,7 +110,7 @@ tbl_questions = Table(
     'tbl_questions', 
     metadata, 
     sa.Column('id', sa.BigInteger, primary_key=True, autoincrement=True, nullable=False),
-    sa.Column('survey_id', sa.BigInteger, nullable=False),
+    sa.Column('survey_id', sa.BigInteger, sa.ForeignKey('tbl_surveys.id'), nullable=False),
     sa.Column('question', sa.String(255), nullable=False),
     sa.Column('deleted_at', sa.TIMESTAMP, nullable=True),
     sa.Column('created_at', sa.TIMESTAMP, nullable=True),
@@ -121,8 +122,8 @@ tbl_answers = Table(
     'tbl_answers', 
     metadata, 
     sa.Column('id', sa.BigInteger, primary_key=True, autoincrement=True, nullable=False),
-    sa.Column('user_id', sa.BigInteger, nullable=False),
-    sa.Column('question_id', sa.BigInteger, nullable=False),
+    sa.Column('user_id', sa.BigInteger, sa.ForeignKey('tbl_users.id'), nullable=False),
+    sa.Column('question_id', sa.BigInteger, sa.ForeignKey('tbl_questions.id'), nullable=False),
     sa.Column('answer', sa.Text, nullable=True),
     sa.Column('created_at', sa.TIMESTAMP, nullable=True),
     sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
@@ -133,8 +134,8 @@ tbl_users_surveys = Table(
     'tbl_users_surveys', 
     metadata, 
     sa.Column('id', sa.BigInteger, primary_key=True, autoincrement=True, nullable=False),
-    sa.Column('user_id', sa.BigInteger, nullable=False),
-    sa.Column('survey_id', sa.BigInteger, nullable=False),
+    sa.Column('user_id', sa.BigInteger, sa.ForeignKey('tbl_users.id'), nullable=False),
+    sa.Column('survey_id', sa.BigInteger, sa.ForeignKey('tbl_surveys.id'), nullable=False),
     sa.Column('created_at', sa.TIMESTAMP, nullable=True),
     sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
 )
