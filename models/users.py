@@ -127,3 +127,14 @@ tbl_answers = Table(
     sa.Column('created_at', sa.TIMESTAMP, nullable=True),
     sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
 )
+
+
+tbl_users_surveys = Table(
+    'tbl_users_surveys', 
+    metadata, 
+    sa.Column('id', sa.BigInteger, primary_key=True, autoincrement=True, nullable=False),
+    sa.Column('user_id', sa.BigInteger, nullable=False),
+    sa.Column('survey_id', sa.BigInteger, nullable=False),
+    sa.Column('created_at', sa.TIMESTAMP, nullable=True),
+    sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
+)
