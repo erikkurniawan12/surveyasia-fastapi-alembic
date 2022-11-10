@@ -109,9 +109,21 @@ tbl_questions = Table(
     'tbl_questions', 
     metadata, 
     sa.Column('id', sa.BigInteger, primary_key=True, autoincrement=True, nullable=False),
-        sa.Column('survey_id', sa.BigInteger, nullable=False),
-        sa.Column('question', sa.String(255), nullable=False),
-        sa.Column('deleted_at', sa.TIMESTAMP, nullable=True),
-        sa.Column('created_at', sa.TIMESTAMP, nullable=True),
-        sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
+    sa.Column('survey_id', sa.BigInteger, nullable=False),
+    sa.Column('question', sa.String(255), nullable=False),
+    sa.Column('deleted_at', sa.TIMESTAMP, nullable=True),
+    sa.Column('created_at', sa.TIMESTAMP, nullable=True),
+    sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
+)
+
+
+tbl_answers = Table(
+    'tbl_answers', 
+    metadata, 
+    sa.Column('id', sa.BigInteger, primary_key=True, autoincrement=True, nullable=False),
+    sa.Column('user_id', sa.BigInteger, nullable=False),
+    sa.Column('question_id', sa.BigInteger, nullable=False),
+    sa.Column('answer', sa.Text, nullable=True),
+    sa.Column('created_at', sa.TIMESTAMP, nullable=True),
+    sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
 )
