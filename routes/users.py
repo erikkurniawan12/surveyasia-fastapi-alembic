@@ -1,5 +1,5 @@
 from schemas.users import Register, Registeris, responseRegister, confirmPassword
-from models.users import tbl_users
+from models.users import tbl_users, tbl_biodata
 from fastapi import APIRouter, Response, status, Request, HTTPException, Depends
 from config.database import conn
 from fastapi.security import OAuth2PasswordRequestForm
@@ -7,6 +7,8 @@ import re
 from auth import tokenn, oauth2
 from encrypt.hashing import Hash
 import uvicorn
+import json
+
 
 users = APIRouter(prefix="/api") 
 
@@ -82,6 +84,10 @@ async def register_users(reg : confirmPassword, response: Response):
         conn.execute(query)
         query_select = tbl_users.select().where(tbl_users.c.email == reg.email)
         data = conn.execute(query_select).fetchone()
+        query_2 = tbl_biodata.insert().values(
+            user_id = data['id']
+        )
+        conn.execute(query_2)
         response = {
             "code": status.HTTP_201_CREATED, 
             "status": "CREATED", 
@@ -95,6 +101,8 @@ async def register_users(reg : confirmPassword, response: Response):
             ]
         }
         return response
+
+
 
 
 @users.post('/users/login', description="Login user")
