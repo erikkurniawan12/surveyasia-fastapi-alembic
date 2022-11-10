@@ -24,7 +24,7 @@ def upgrade():
         sa.Column('nik', sa.BigInteger, nullable=False),
         sa.Column('nama_lengkap', sa.String(255), nullable=False),
         sa.Column('telp', sa.String(255), nullable=False),
-        sa.Column('gender', sa.Enum('Laki-laki','Perempuan'), nullable=False),
+        sa.Column('gender', sa.Enum('Laki-laki','Perempuan'), nullable=True),
         sa.Column('birth_place', sa.String(50), nullable=False),
         sa.Column('birth_date', sa.Date(), nullable=False),
         sa.Column('ktp_province', sa.String(50), nullable=False),
