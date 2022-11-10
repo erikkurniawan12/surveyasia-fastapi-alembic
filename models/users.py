@@ -45,7 +45,7 @@ tbl_users = Table(
     sa.Column('email_verified_at', sa.TIMESTAMP, nullable=True),
     sa.Column('biodata_id', sa.BigInteger, nullable=False),
     sa.Column('created_at', sa.TIMESTAMP, nullable=True),
-    sa.Column('updated_at', sa.TIMESTAMP, nullable=True),
+    sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
 )
 
 
@@ -73,5 +73,33 @@ tbl_biodata = Table(
     sa.Column('job', sa.String(255), nullable=False),
     sa.Column('job_location', sa.String(255), nullable=False),
     sa.Column('created_at', sa.TIMESTAMP, nullable=True),
-    sa.Column('updated_at', sa.TIMESTAMP, nullable=True),
+    sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
+)
+
+
+tbl_surveyCategories = Table(
+    'tbl_surveyCategories', 
+    metadata, 
+    sa.Column('id', sa.BigInteger, primary_key=True, autoincrement=True, nullable=False),
+    sa.Column('category', sa.Enum('Customers', 'Education', 'Helathcare', 'Employee', 'Market Research'), nullable=False), 
+    sa.Column('description', sa.Text, nullable=False), 
+    sa.Column('created_at', sa.TIMESTAMP, nullable=True), 
+    sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
+)
+
+
+tbl_surveys = Table(
+    'tbl_surveys', 
+    metadata, 
+    sa.Column('id', sa.BigInteger, primary_key=True, autoincrement=True, nullable=False),
+    sa.Column('surveycategory_id', sa.BigInteger, nullable=False),
+    sa.Column('title', sa.String(255), nullable=False),
+    sa.Column('author', sa.String(255), nullable=False),
+    sa.Column('description', sa.String(255), nullable=True),
+    sa.Column('survey_point', sa.BigInteger, nullable=False),
+    sa.Column('status', sa.String(255), nullable=True),
+    sa.Column('expired_at', sa.TIMESTAMP, nullable=True),
+    sa.Column('deleted_at', sa.TIMESTAMP, nullable=True),
+    sa.Column('created_at', sa.TIMESTAMP, nullable=True),
+    sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
 )
