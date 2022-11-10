@@ -82,12 +82,26 @@ async def register_users(reg : confirmPassword, response: Response):
             updated_at = reg.updated_at
         )
         conn.execute(query)
+
+        # insert foreignkey user_id to tbl_biodata
         query_select = tbl_users.select().where(tbl_users.c.email == reg.email)
         data = conn.execute(query_select).fetchone()
         query_2 = tbl_biodata.insert().values(
-            user_id = data['id']
+            user_id = data['id'], 
+            telp = data['telp'],
+            created_at = data['created_at'], 
+            updated_at = data['updated_at']
         )
         conn.execute(query_2)
+
+        # insert foreignkey biodata_id to tbl_users
+        query_select_3 = tbl_biodata.select().where(tbl_biodata.c.telp == reg.telp)
+        data_3 = conn.execute(query_select_3).fetchone()
+        query_3 = tbl_users.update().values(
+            biodata_id = data_3['id']
+        ).where(tbl_users.c.email == reg.email)
+        conn.execute(query_3)
+
         response = {
             "code": status.HTTP_201_CREATED, 
             "status": "CREATED", 
