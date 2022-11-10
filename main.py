@@ -14,8 +14,14 @@ def cors_headers(app):
         )
     return app
 
-app.include_router(users)
+def configure():
+    app.include_router(users)
+
+configure()
 
 @app.get("/")
 async def root():
-    return {"message": "FastAPI CRUD","Authors":"Erik"}
+    return {
+        "message": "API SURVEYASIA", 
+        "Authors":"Erik"
+    }

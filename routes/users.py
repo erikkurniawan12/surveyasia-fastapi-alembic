@@ -6,8 +6,10 @@ from fastapi.security import OAuth2PasswordRequestForm
 import re
 from auth import tokenn, oauth2
 from encrypt.hashing import Hash
+import uvicorn
 
 users = APIRouter(prefix="/api") 
+
 
 @users.get('/users/all', response_model=Registeris, description="Menampilkan semua data")
 async def find_all_users(limit: int = 10, offset: int = 0, current_user: confirmPassword = Depends(oauth2.get_current_user)):
@@ -133,3 +135,7 @@ async def login_users(req : OAuth2PasswordRequestForm = Depends()):
                 }
         }     
     } 
+
+
+
+
