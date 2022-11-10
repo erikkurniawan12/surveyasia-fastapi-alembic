@@ -40,4 +40,6 @@ def upgrade():
     )
 
 def downgrade():
-    pass
+    op.drop_table(
+        table_name='tbl_surveys'
+    )
