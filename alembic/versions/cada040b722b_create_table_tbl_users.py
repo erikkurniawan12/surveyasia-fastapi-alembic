@@ -31,7 +31,7 @@ def upgrade():
         sa.Column('nik', sa.BigInteger, nullable=False),
         sa.Column('birth_place', sa.String(50), nullable=False),
         sa.Column('birth_date', sa.Date(), nullable=False),
-        sa.Column('gender', sa.Enum('Laki-laki','Perempuan'), nullable=False),
+        sa.Column('gender', sa.Enum('Laki-laki','Perempuan'), nullable=True),
         sa.Column('job', sa.String(255), nullable=False),
         sa.Column('job_location', sa.String(255), nullable=False),
         sa.Column('ktp_province', sa.String(50), nullable=False),
@@ -50,7 +50,18 @@ def upgrade():
         sa.Column('created_at', sa.TIMESTAMP, nullable=True),
         sa.Column('updated_at', sa.TIMESTAMP, nullable=True),
     )
-
+    op.create_foreign_key(
+        constraint_name='fk_users_biodata', 
+        source_table='tbl_users', 
+        referent_table='tbl_biodata', 
+        local_cols=['biodata_id'], 
+        remote_cols=['id']
+    )
+    op.create_unique_constraint(
+        constraint_name='uq_users_email', 
+        table_name='tbl_users', 
+        columns=['email']
+    )
 
 def downgrade():
     op.drop_table(
