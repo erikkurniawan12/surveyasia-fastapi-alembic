@@ -1,4 +1,4 @@
-from schemas.users import Register, Registeris, responseRegister, confirmPassword
+from schemas.users import Register, Registeris, ResponseRegister, ConfirmPassword
 from models.users import tbl_users, tbl_biodata
 from fastapi import APIRouter, Response, status, Request, HTTPException, Depends
 from config.database import conn
@@ -10,11 +10,11 @@ import uvicorn
 import json
 
 
-users = APIRouter(prefix="/api") 
+register = APIRouter(prefix="/api") 
 
 
-@users.get('/users/all', response_model=Registeris, description="Menampilkan semua data")
-async def find_all_users(limit: int = 10, offset: int = 0, current_user: confirmPassword = Depends(oauth2.get_current_user)):
+@register.get('/users/all', response_model=Registeris, description="Menampilkan semua data")
+async def find_all_users(limit: int = 10, offset: int = 0, current_user: ConfirmPassword = Depends(oauth2.get_current_user)):
     query = tbl_users.select().offset(offset).limit(limit)
     data = conn.execute(query).fetchall()
     response = {
@@ -29,16 +29,27 @@ async def find_all_users(limit: int = 10, offset: int = 0, current_user: confirm
     return response
 
 
-@users.post('/users/register', description="Registrasi user")
-async def register_users(reg : confirmPassword, response: Response):
+@register.post('/users/register', description="Registrasi user")
+async def register_users(reg : ConfirmPassword, response: Response):
     cek_email = tbl_users.select().filter(tbl_users.c.email == reg.email)
     cek_email = conn.execute(cek_email).fetchone()
+    cek_telp = tbl_users.select().filter(tbl_users.c.telp == reg.telp)
+    cek_telp = conn.execute(cek_telp).fetchone()
     if cek_email is not None:
         response.status_code = status.HTTP_400_BAD_REQUEST
         json_response =  {
             "code": response.status_code, 
             "status": "BAD_REQUEST",
             "message": "Email telah digunakan", 
+            "data": []
+        }
+        return json_response
+    if cek_telp is not None:
+        response.status_code = status.HTTP_400_BAD_REQUEST
+        json_response = {
+            "code": response.status_code, 
+            "status": "BAD_REQUEST",
+            "message": "Nomor ponsel telah digunakan", 
             "data": []
         }
         return json_response
@@ -82,7 +93,6 @@ async def register_users(reg : confirmPassword, response: Response):
             updated_at = reg.updated_at
         )
         conn.execute(query)
-
         # insert foreignkey user_id to tbl_biodata
         query_select = tbl_users.select().where(tbl_users.c.email == reg.email)
         data = conn.execute(query_select).fetchone()
@@ -101,7 +111,6 @@ async def register_users(reg : confirmPassword, response: Response):
             biodata_id = data_3['id']
         ).where(tbl_users.c.email == reg.email)
         conn.execute(query_3)
-
         response = {
             "code": status.HTTP_201_CREATED, 
             "status": "CREATED", 
@@ -119,44 +128,7 @@ async def register_users(reg : confirmPassword, response: Response):
 
 
 
-@users.post('/users/login', description="Login user")
-async def login_users(req : OAuth2PasswordRequestForm = Depends()):
-    cek_email = tbl_users.select().filter(tbl_users.c.email == req.username)
-    cek_email = conn.execute(cek_email).fetchone()
-    if not re.match(r'[^@]+@[^@]+\.[^@]+', req.username):
-        return {
-            "code": status.HTTP_400_BAD_REQUEST, 
-            "status": "BAD_REQUEST",
-            "message": "Email tidak valid", 
-            "data": []
-        }
-    if not cek_email:
-        return {
-            "code": status.HTTP_404_NOT_FOUND, 
-            "status": "NOT_FOUND", 
-            "message": "Tidak Terdaftar!", 
-            "data": []
-        }
-    if not Hash.verify(cek_email.password, req.password):
-        return {
-            "code": status.HTTP_404_NOT_FOUND, 
-            "status": "NOT_FOUND", 
-            "message": "Kata sandi tidak cocok", 
-            "data": []
-        }
-    access_token = tokenn.create_access_token(data={"sub": req.username})
-    return {
-        "access_token": access_token, 
-        "token_type": "bearer", 
-        "info": {
-                "code": status.HTTP_200_OK, 
-                "status": "OK", 
-                "message": "Login berhasil!", 
-                "data": {
-                    "email": req.username, 
-                }
-        }     
-    } 
+ 
 
 
 

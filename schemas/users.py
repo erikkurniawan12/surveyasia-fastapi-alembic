@@ -9,15 +9,15 @@ class Register(BaseModel):
     telp: str = Field(..., example='+6285999123456')
     password: str = Field(..., example='surveyas123')
 
-class responseRegister(Register):
+class ResponseRegister(Register):
     id: int
 
 class Registeris(BaseModel):
     limit: int = Field(default=5)
     offset: int = Field(default=0)
-    data: List[responseRegister]
+    data: List[ResponseRegister]
 
-class confirmPassword(Register):
+class ConfirmPassword(Register):
     confirm_password: str = Field(..., example='surveyas123')
     created_at: str = Field(default=datetime.utcnow() + timedelta(hours=7), exclude=False)
     updated_at: str = Field(default=datetime.utcnow() + timedelta(hours=7), exclude=False)

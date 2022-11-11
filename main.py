@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes.users import users
+from routes.users_register import register
+from routes.users_login import login
 
 app = FastAPI()
 
@@ -15,7 +16,9 @@ def cors_headers(app):
     return app
 
 def configure():
-    app.include_router(users)
+    app.include_router(register)
+    app.include_router(login)
+
 
 configure()
 
