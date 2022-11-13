@@ -29,6 +29,7 @@ async def find_all_users(limit: int = 10, offset: int = 0, current_user: Confirm
     return response
 
 
+
 @register.post('/users/register', description="Registrasi user")
 async def register_users(reg : ConfirmPassword, response: Response):
     cek_email = tbl_users.select().filter(tbl_users.c.email == reg.email)
@@ -88,7 +89,8 @@ async def register_users(reg : ConfirmPassword, response: Response):
             username = reg.username,
             email = reg.email,
             telp = reg.telp,
-            password = Hash.bcrypt(reg.password), 
+            password = Hash.bcrypt(reg.password),
+            is_active = 1,
             created_at = reg.created_at, 
             updated_at = reg.updated_at
         )

@@ -38,6 +38,10 @@ async def login_users(req : OAuth2PasswordRequestForm = Depends()):
             "data": []
         }
     access_token = tokenn.create_access_token(data={"sub": req.username})
+    query = tbl_users.update().values(
+            remember_token = access_token
+        ).where(tbl_users.c.email == req.username)
+    conn.execute(query).fetchone
     return {
         "access_token": access_token, 
         "token_type": "bearer", 

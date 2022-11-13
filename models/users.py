@@ -45,6 +45,7 @@ tbl_users = Table(
     sa.Column('provider_name', sa.String(255), nullable=True),
     sa.Column('email_verified_at', sa.TIMESTAMP, nullable=True),
     sa.Column('biodata_id', sa.BigInteger, sa.ForeignKey('tbl_biodata.id'), unique=True, nullable=False),
+    sa.Column('is_active', sa.Integer, nullable=False),
     sa.Column('created_at', sa.TIMESTAMP, nullable=True),
     sa.Column('updated_at', sa.TIMESTAMP, nullable=True)
 )

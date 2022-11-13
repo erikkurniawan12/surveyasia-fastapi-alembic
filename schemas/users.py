@@ -8,6 +8,7 @@ class Register(BaseModel):
     email: str = Field(...)
     telp: str = Field(..., example='+6285999123456')
     password: str = Field(..., example='surveyas123')
+    is_active: int = Field(default=1, exclude=False)
 
 class ResponseRegister(Register):
     id: int
