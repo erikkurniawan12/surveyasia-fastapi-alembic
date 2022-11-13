@@ -21,7 +21,8 @@ username = APIRouter(prefix="/api")
 @username.post('/users/profile/username', description="Update username")
 async def update_username(req : UsernameTimestamp, response: Response, current_user: ConfirmPassword = Depends(get_current_user)):
     query_1 = tbl_users.update().values(
-        username = req.username
+        username = req.username, 
+        updated_at = req.updated_at
     )    
     conn.execute(query_1)
     query_2 = tbl_users.select().filter(
