@@ -1,14 +1,9 @@
-from schemas.users import Register, Registeris, ResponseRegister, ConfirmPassword
-from schemas.profile_schema import InformasiPribadiBase, InformasiPribadiTimestamp
-from schemas.profile_username_schema import UsernameTimestamp
+from schemas.users import ConfirmPassword
 from schemas.profile_password_schema import PasswordTimestamp
-from models.users import tbl_users, tbl_biodata
-from fastapi import APIRouter, Response, status, Request, HTTPException, Depends
+from models.users import tbl_users
+from fastapi import APIRouter, Response, status, Depends
 from config.database import conn
-from fastapi.security import OAuth2PasswordRequestForm
-from auth import tokenn, oauth2
 from encrypt.hashing import Hash
-from auth import tokenn
 from auth.oauth2 import get_current_user
 from encrypt.hashing import Hash
 

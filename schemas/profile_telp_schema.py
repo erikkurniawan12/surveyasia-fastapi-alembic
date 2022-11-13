@@ -1,6 +1,5 @@
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 from pydantic import BaseModel, Field
-from typing import List
 from typing import Optional
 
 

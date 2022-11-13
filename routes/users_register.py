@@ -1,32 +1,12 @@
-from schemas.users import Register, Registeris, ResponseRegister, ConfirmPassword
+from schemas.users import ConfirmPassword
 from models.users import tbl_users, tbl_biodata
-from fastapi import APIRouter, Response, status, Request, HTTPException, Depends
+from fastapi import APIRouter, Response, status
 from config.database import conn
-from fastapi.security import OAuth2PasswordRequestForm
 import re
-from auth import tokenn, oauth2
 from encrypt.hashing import Hash
-import uvicorn
-import json
 
 
 register = APIRouter(prefix="/api") 
-
-
-@register.get('/users/all', response_model=Registeris, description="Menampilkan semua data")
-async def find_all_users(limit: int = 10, offset: int = 0, current_user: ConfirmPassword = Depends(oauth2.get_current_user)):
-    query = tbl_users.select().offset(offset).limit(limit)
-    data = conn.execute(query).fetchall()
-    response = {
-        "code": status.HTTP_200_OK, 
-        "status": "OK", 
-        "data": data, 
-        "pagination": {
-            "limit": limit, 
-            "offset": offset 
-        }
-    }
-    return response
 
 
 

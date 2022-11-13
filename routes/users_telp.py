@@ -1,13 +1,8 @@
-from schemas.users import Register, Registeris, ResponseRegister, ConfirmPassword
-from schemas.profile_schema import InformasiPribadiBase, InformasiPribadiTimestamp
-from schemas.profile_username_schema import UsernameTimestamp
+from schemas.users import ConfirmPassword
 from schemas.profile_telp_schema import TelpTimestamp
 from models.users import tbl_users, tbl_biodata
-from fastapi import APIRouter, Response, status, Request, HTTPException, Depends
+from fastapi import APIRouter, Response, status, Depends
 from config.database import conn
-from fastapi.security import OAuth2PasswordRequestForm
-from auth import tokenn, oauth2
-from encrypt.hashing import Hash
 from auth import tokenn
 from auth.oauth2 import get_current_user
 
@@ -20,7 +15,7 @@ telp = APIRouter(prefix="/api")
     
 
 @telp.post('/users/profile/telp', description="Update nomor ponsel")
-async def update_username(req : TelpTimestamp, response: Response, current_user: ConfirmPassword = Depends(get_current_user)):
+async def update_telp(req : TelpTimestamp, response: Response, current_user: ConfirmPassword = Depends(get_current_user)):
     query_1 = tbl_users.update().values(
         telp = req.telp, 
         updated_at = req.updated_at

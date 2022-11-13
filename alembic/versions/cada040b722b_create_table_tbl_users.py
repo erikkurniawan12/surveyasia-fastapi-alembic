@@ -58,11 +58,7 @@ def upgrade():
         local_cols=['biodata_id'], 
         remote_cols=['id']
     )
-    op.create_unique_constraint(
-        constraint_name='uq_users_email', 
-        table_name='tbl_users', 
-        columns=['email']
-    )
+    
 
 def downgrade():
     op.drop_table(
