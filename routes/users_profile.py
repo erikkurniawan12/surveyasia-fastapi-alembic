@@ -18,7 +18,7 @@ profile = APIRouter(prefix="/api")
     
 
 @profile.post('/users/profile', description="Update informasi pribadi")
-async def update_info(req : InformasiPribadiTimestamp, response: Response, current_user: ConfirmPassword = Depends(get_current_user)):
+async def update_informasi_pribadi(req : InformasiPribadiTimestamp, response: Response, current_user: ConfirmPassword = Depends(get_current_user)):
     query_1 = tbl_users.update().values(
         nik = req.nik,
         nama_lengkap = req.nama_lengkap,
